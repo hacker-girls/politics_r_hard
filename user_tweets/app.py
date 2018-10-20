@@ -31,7 +31,7 @@ def form_input():
 	}
 
 	r = requests.get("https://www.googleapis.com/civicinfo/v2/voterinfo")
-	data = r.json()
+	data = r.json.oads(r.text)
 
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
