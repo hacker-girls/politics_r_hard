@@ -1,14 +1,8 @@
 import pandas as pd
 from requests import get
 from bs4 import BeautifulSoup as bs
-import re
 from twitter import *
-import numpy as np
 
-url_L = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=2&title='
-url_L2 = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=2&title=&page=1'
-url_R = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=4&title='
-url_C = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=3&title='
 
 def get_list(url):
     list = []
@@ -18,11 +12,6 @@ def get_list(url):
         t = title.find_all('a',href=True)
         list.append(t[0].string.encode("utf-8"))
     return list
-
-left_news = get_list(url_L)
-left_news = left_news + get_list(url_L2)
-right_news = get_list(url_R)
-center_news = get_list(url_C)
 
 #now to feed back into twitter oh jeez heres the hard stuff
 OAUTH_TOKEN="2464717370-ztIheNqKFIr9ll1ZG3OEa1SxRPTGY8k1XL3Ukj0"
@@ -40,10 +29,6 @@ def get_screen_names(list_news):
                 handles.append(acct['screen_name'].encode("utf-8"))
                 break
     return handles
-
-left_handles = get_screen_names(left_news)
-right_handles = get_screen_names(right_news)
-center_handles = get_screen_names(center_news)
 
 def get_data(handle,count): 
     user_tl = twitter.statuses.user_timeline(screen_name=handle, count=count)
@@ -68,9 +53,3 @@ def save_csv(handles, count, csv_path):
     data_csv.to_csv(csv_path)
     return data_csv
 
-count = 5000
-csv_left = save_csv(left_handles, count,'./data/left.csv')
-csv_right = save_csv(right_handles, count,'./data/right.csv')
-csv_center = save_csv(center_handles, count,'./data/center.csv')
-
-print("All done!")
