@@ -12,23 +12,94 @@
         crossorigin="anonymous"></script>
     <style>
 	    body {
-	          font-family: 'Roboto', sans-serif;
+	          font-family: 'Oswald', sans-serif;
 	    }
         h1 {
           font-family: 'Oswald', sans-serif;
           font-size: 5em;
         }
+        th, td {
+        	padding: 4px;
+        	margin-bottom: 4px;
+        }
+        table {
+        	border-collapse: separate;
+        	border-spacing: 0px 5px;
+        }
+
         .panel {
         	border-style: solid;
-        	border-width: 3px;
+        	border-width: 10px;
         	border-color: white;
         	display: none;
         }
+        .panel:hover {
+        	border-width: 1px;
+        	transition: 0.3s ease;
+        }
         .panel-title {
-        	font-family: 'Oswald', sans-serif;
         	color:white;
         	margin-top: 7px;
         	text-transform: uppercase;
+        }
+        .races {
+        	height: 65%;
+        	overflow-y: scroll;
+        }
+        .races-row {
+        	background-color: white;
+        	width:90%;
+        	transition: 0.5s ease;
+        }
+        .races-row:hover {
+        	opacity: 0.5;
+        	transition: 0.5s ease;
+        }
+        .candidate {
+        	height:100%;
+        	width: 25%;
+        	display: inline-block;
+        	transition: 0.5s ease;
+        }
+        .candidate:hover {
+        	opacity: 0.5;
+        	transition: 0.5s ease;
+        }
+        .candidates-wrapper {
+        	overflow-x: scroll;
+        }
+        .candidate-photo-wrapper {
+        	height: 60%;
+        	margin-bottom: 3px;
+        	text-align: center;
+        }
+        .candidate-photo {
+        	border-radius: 50%;
+        	max-width: 50%;
+        	height:auto;
+        }
+        .candidate-name {
+        	color:white;
+        	text-transform: uppercase;
+        	text-align: center;
+        	margin-bottom: -3px;
+        }
+        .candidate-position {
+        	color:white;
+        	text-align: center;
+        	font-weight: lighter;
+        	font-size: 0.8em;
+        }
+        .table-wrapper {
+        	overflow-y: scroll;
+        	height: 100%;
+        }
+
+        #content1 {
+        	height: 50vh;
+        }
+        #content2 {
+        	height: 30vh;
         }
         #ideology {
         	background-color: #C6121F;
@@ -39,12 +110,21 @@
         #candidates {
         	background-color: #333333;
         }
+        #get-involved {
+        	background-color: #E2CF17;
+        }
 	</style>
 	<script>
 		$(document).ready(function() {
 			$('#ideology').fadeIn(800);
 			$('#races').delay(800).fadeIn(800);
 			$('#candidates').delay(1600).fadeIn(800);
+			$('#get-involved').delay(2400).fadeIn(800);
+
+			setTimeout(function() {
+				$('.panel').css('transition', '0.3s ease')
+			}, 3200);
+
 		});
 
 	</script>
@@ -56,8 +136,8 @@
 		</div>
 		<hr>
 
-		<div class="row" style="height:400px">
-			<div class="col-4 panel" id="ideology">
+		<div class="row" id="content1">
+			<div class="col-5 panel" id="ideology">
 				<h3 class="panel-title">Ideology</h3>
 				<b>{{screen_name}}</b>
 				<ul>{% for t in user_tweets %}
@@ -71,17 +151,74 @@
 					{% endfor %}
 				</ul>
 			</div>
-			<div class="col-8">
+			<div class="col-7">
 				<div class="row panel" id="races" style="height:50%">
-					<div class="col-12">
+					<div class="col-12" style="height: 100%">
 						<h3 class="panel-title">Upcoming Races</h3>
+						<div class="races">
+							<table style="width:100%;">
+								<tr class="races-row">
+									<th>Date</th>
+									<td>Position</td>
+									<td>Info?</td>
+								</tr>
+								<tr class="races-row">
+									<th>Date</th>
+									<td>Position</td>
+									<td>Info?</td>
+								</tr>
+								<tr class="races-row">
+									<th>Date</th>
+									<td>Position</td>
+									<td>Info?</td>
+								</tr>
+								<tr class="races-row">
+									<th>Date</th>
+									<td>Position</td>
+									<td>Info?</td>
+								</tr>
+								<tr class="races-row">
+									<th>Date</th>
+									<td>Position</td>
+									<td>Info?</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div class="row panel" id="candidates" style="height:50%">
 					<div class="col-12">
 						<h3 class="panel-title">Candidates</h3>
+						<div class="candidates-wrapper">
+							<div class="col candidate">
+								<div class="candidate-photo-wrapper">
+									<img src="test.jpg" class="candidate-photo">
+								</div>
+								<p class="candidate-name">First Last</p>
+								<p class="candidate-position">Governor</p>
+							</div>
+							<div class="col candidate">
+								<div class="candidate-photo-wrapper">
+									<img src="test.jpg" class="candidate-photo">
+								</div>
+								<p class="candidate-name">First Last</p>
+								<p class="candidate-position">Governor</p>
+							</div>
+							<div class="col candidate">
+								<div class="candidate-photo-wrapper">
+									<img src="test.jpg" class="candidate-photo">
+								</div>
+								<p class="candidate-name">First Last</p>
+								<p class="candidate-position">Governor</p>
+							</div>
+						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="row" id="content2">
+			<div class="col-12 panel" id="get-involved">
+				<h3 class="panel-title">Get Involved</h3>
 			</div>
 		</div>
 	</div>

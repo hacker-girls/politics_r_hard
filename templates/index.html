@@ -25,13 +25,57 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
+        #map {
+            height: 100%;
+        }
+        #description {
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        #infowindow-content .title {
+            font-weight: bold;
+        }
+
+        #infowindow-content {
+            display: none;
+        }
+
+        #map #infowindow-content {
+            display: inline;
+        }
+
+        #pac-input {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 300px;
+        }
+
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
+
+        #title {
+            color: #fff;
+            background-color: #4d90fe;
+            font-size: 25px;
+            font-weight: 500;
+            padding: 6px 12px;
+        }
     </style>
 </head>
 <body>
 <form method="post">
     <div class="container" id="content">
         <div class="row justify-content-center" id="header">
-          <h1>VOTER REC</h1>
+          <h1>POLITIREC</h1>
         </div>
         <div class="row justify-content-center">
             <div class="col-6 text-center">
@@ -50,14 +94,88 @@
                     <div class="input-group-text">@</div>
                   </div>
             	<input type="text" name="screen_name">
-            	<label for="location" class="col-sm-2 col-form-label" style="text-align: right">Location:</label>
-            	<input type="text" name="location">
+            	<label for="pac-input" class="col-sm-2 col-form-label" style="text-align: right">Location:</label>
+            	<input id="pac-input" type="text" placeholder="Enter a location">
                 </div>
             </div>
             <div class="col-sm-1">
                 <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
             </div>
         </div>
+
+        <div id="map"></div>
+        <div id="infowindow-content">
+          <img src="" width="16" height="16" id="place-icon">
+          <span id="place-name"  class="title"></span><br>
+          <span id="place-address"></span>
+        </div>
     </div>
 </form>
+<script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13
+        });
+        var card = document.getElementById('pac-card');
+        var input = document.getElementById('pac-input');
+
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+
+
+        var options = {
+            types: ['address'],
+            componentRestrictions: {country: 'us'}
+        }
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        autocomplete.bindTo('bounds', map);
+
+        autocomplete.setFields(
+            ['address_components', 'geometry', 'icon', 'name']);
+
+        var infowindow = new google.maps.InfoWindow();
+        var infowindowContent = document.getElementById('infowindow-content');
+        infowindow.setContent(infowindowContent);
+        var marker = new google.maps.Marker({
+          map: map,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
+
+        autocomplete.addListener('place_changed', function() {
+          infowindow.close();
+          marker.setVisible(false);
+          var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("No details available for input: '" + place.name + "'");
+            return;
+          }
+
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+          }
+          marker.setPosition(place.geometry.location);
+          marker.setVisible(true);
+
+          var address = '';
+          if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+          }
+
+          infowindowContent.children['place-icon'].src = place.icon;
+          infowindowContent.children['place-name'].textContent = place.name;
+          infowindowContent.children['place-address'].textContent = address;
+          infowindow.open(map, marker);
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKl0AoGupsozBlO3Ym_HbQLG9aPJXcYyM&libraries=places&callback=initMap"
+        async defer></script>
 </body>
