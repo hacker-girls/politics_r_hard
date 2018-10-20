@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Result</title>
+</head>
+<body>
+	<h1>{{screen_name}}</h1>
+	<ul>{% for t in user_tweets %}
+			<li>
+				<p> 
+					{{t.text}}
+					<br>
+					<strong>@{{ t.user.screen_name}}</strong>
+				</p>
+			</li>
+		{% endfor %}
+	</ul>
+</body>
