@@ -1,0 +1,22 @@
+just for reference
+
+MEDIA:
+get all RT'd and replied to users => check if any are news => use allsides for bias
+
+wait maybe new system:
+
+=> scrape allsides data to divide between left and right news sources
+=> scrape all tweet data from 10 most widely read news sources on both left and right leaning
+=> scrape tweet data for all available congresspeople stratified by left, right, indep (are there further metrics)
+=> train model on scraped tweet data to output congressional leaning
+=> get all tweet data for user input handle
+=> run on model to get political leaning with confidence score if possible
+
+allsides:
+
+left left ->	 <a href="/media-bias/left">
+left center ->	 <a href="/media-bias/left-center">	
+center ->   	 <a href="/media-bias/center">
+right center ->	 <a href="/media-bias/right-center">
+right right -> 	 <a href="/media-bias/right">
+
