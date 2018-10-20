@@ -1,14 +1,14 @@
 import pandas as pd
 from requests import get
 from bs4 import BeautifulSoup as bs
-import get_tweets
 import re
+from twitter import *
+import numpy as np
 
 url_L = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=2&title='
 url_L2 = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=2&title=&page=1'
 url_R = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=4&title='
 url_C = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=3&title='
-
 
 def get_list(url):
     list = []
@@ -29,9 +29,48 @@ OAUTH_TOKEN="2464717370-ztIheNqKFIr9ll1ZG3OEa1SxRPTGY8k1XL3Ukj0"
 OAUTH_SECRET="doEQPqBTLo22FrakNfY2q3jdLJyary6TFcLT8sv8AJes7"
 CONSUMER_KEY="0J1e4CLZOLJTG1fVQaQya4fH1"
 CONSUMER_SECRET="SUZK3xOyW4DJzY0rqr8pr2PQuVjEjEPgUNd73fMYd5eXSg4sY9"
-
-for name in left_news:
-    print name
-    t = Twitter(
+twitter = Twitter(
     auth = OAuth(OAUTH_TOKEN, OAUTH_SECRET, CONSUMER_KEY, CONSUMER_SECRET))
-    user_handle = 
+def get_screen_names(list_news):
+    handles = []
+    for name in list_news:
+        result_accts = twitter.users.search(q=name)
+        for acct in result_accts:
+            if acct["verified"] == True:
+                handles.append(acct['screen_name'].encode("utf-8"))
+                break
+    return handles
+
+left_handles = get_screen_names(left_news)
+right_handles = get_screen_names(right_news)
+center_handles = get_screen_names(center_news)
+
+def get_data(handle,count): 
+    user_tl = twitter.statuses.user_timeline(screen_name=handle, count=count)
+    text = []
+    for tw in user_tl:
+        if not tw['in_reply_to_status_id']:
+            text.append(tw['text'])
+    return text
+
+def save_csv(handles, count, csv_path):
+    data_csv = pd.DataFrame(columns=['News','Tweets'])
+    data_csv['News']=handles
+    data = []
+    for handle in handles:
+        user_tl = twitter.statuses.user_timeline(screen_name=handle, count=count)
+        text = []
+        for tw in user_tl:
+            if not tw['in_reply_to_status_id']:
+                text.append(tw['text'].encode("utf-8"))
+        data.append(text)
+    data_csv['Tweets']=data
+    data_csv.to_csv(csv_path)
+    return data_csv
+
+count = 5000
+csv_left = save_csv(left_handles, count,'./data/left.csv')
+csv_right = save_csv(right_handles, count,'./data/right.csv')
+csv_center = save_csv(center_handles, count,'./data/center.csv')
+
+print("All done!")
