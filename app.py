@@ -27,14 +27,14 @@ def model(user_df):
 
         total_df = pd.read_csv('./data/total.csv')
         stop_words = set(stopwords.words('english'))
-        
+
         def pre_process(mess):
                 mess = nltk.word_tokenize(mess)
                 clean = [word.lower() for word in mess if word.lower() not in stop_words]
                 return clean
 
         def piped_vect(X,y,user_x):
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)    
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
                 text_clf = Pipeline([('vect', CountVectorizer(analyzer=pre_process,encoding='utf-8',strip_accents=['ascii','unicode'],max_df=0.8,min_df=0.3)),('tfidf',TfidfTransformer()),('clf', MultinomialNB()),])
                 text_clf = text_clf.fit(X_train, y_train)
                 predicted = text_clf.predict(user_x)
@@ -61,14 +61,14 @@ def gen_Graph(user_df):
         return rightb,leftb
 
 
-<<<<<<< HEAD
-=======
+# <<<<<<< HEAD
+# =======
 
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 
->>>>>>> 1e392c7a1ca5fb13d57dea98fdfd1cbf40b56cff
+# >>>>>>> 1e392c7a1ca5fb13d57dea98fdfd1cbf40b56cff
 def form_input():
 	if request.method == 'POST':
 		screen_name = request.form['screen_name']
