@@ -37,8 +37,9 @@ def form_input():
 	election = data['election']['name']
 	contests = data['contests']
 	contest_type = []
-	contest_office = []
-	contest_level = []
+	contest_office_federal = []
+	contest_office_state = []
+	contest_office_local = []
 	contest_candidates_federal = []
 	contest_candidates_state = []
 	contest_candidates_local = []
@@ -46,7 +47,12 @@ def form_input():
 		if 'type' in contest:
 			contest_type.append(contest['type'])
 		if 'office' in contest:
-			contest_office.append(contest['office'])
+			if 'country' in contest['level']:
+				contest_office_federal.append(contest['office'])
+			elif 'administrativeArea1' in contest['level']:
+				contest_office_state.append(contest['office'])
+			else:
+				contest_office_local.append(contest['office'])
 		if 'level' in contest:
 			if 'country' in contest['level']:
 				for c in contest['candidates']:
