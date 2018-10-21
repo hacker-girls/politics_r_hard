@@ -113,7 +113,7 @@ def form_input():
 		polling_places_list.append({'name': place['address']['locationName'], 'address': place['address']['line1'], 'city': place['address']['city'], 'state': place['address']['state'], 'zip': place['address']['zip']})
 
 	for site in early_vote_sites:
-		early_vote_sites_list.append({'name': place['address']['locationName'], 'address': place['address']['line1'], 'city': place['address']['city'], 'state': place['address']['state'], 'zip': place['address']['zip']})
+		early_vote_sites_list.append({'name': place['address']['locationName'], 'street_address': place['address']['line1'], 'city': place['address']['city'], 'state': place['address']['state'], 'zip': place['address']['zip']})
 
 
 	templateData = {
