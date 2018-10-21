@@ -51,12 +51,13 @@ def form_input():
 			contest_level.append(contest['level'])
 		if 'candidates' in contest:
 			for c in contest['candidates']:
-				if 'level' == 'country':
-					contest_candidates_federal.append({'name': c['name'], 'office': contest['office']})
-				elif 'level' == 'administrativeArea1':
-					contest_candidates_state.append({'name': c['name'], 'office': contest['office']})
-				else:
-					contest_candidates_local.append({'name': c['name'], 'office': contest['office']})
+				if 'level' in c:
+					if 'level' == 'country':
+						contest_candidates_federal.append({'name': c['name'], 'office': contest['office']})
+					elif 'level' == 'administrativeArea1':
+						contest_candidates_state.append({'name': c['name'], 'office': contest['office']})
+					else:
+						contest_candidates_local.append({'name': c['name'], 'office': contest['office']})
 
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
