@@ -3,7 +3,6 @@ from requests import get
 from bs4 import BeautifulSoup as bs
 from twitter import *
 
-
 def get_list(url):
     list = []
     response = get(url)
@@ -11,6 +10,7 @@ def get_list(url):
     for title in html_soup.find_all("td", class_="views-field views-field-title source-title"):
         t = title.find_all('a',href=True)
         list.append(t[0].string.encode("utf-8"))
+        
     return list
 
 #now to feed back into twitter oh jeez heres the hard stuff
@@ -20,6 +20,7 @@ CONSUMER_KEY="0J1e4CLZOLJTG1fVQaQya4fH1"
 CONSUMER_SECRET="SUZK3xOyW4DJzY0rqr8pr2PQuVjEjEPgUNd73fMYd5eXSg4sY9"
 twitter = Twitter(
     auth = OAuth(OAUTH_TOKEN, OAUTH_SECRET, CONSUMER_KEY, CONSUMER_SECRET))
+
 def get_screen_names(list_news):
     handles = []
     for name in list_news:
@@ -30,26 +31,42 @@ def get_screen_names(list_news):
                 break
     return handles
 
-def get_data(handle,count): 
-    user_tl = twitter.statuses.user_timeline(screen_name=handle, count=count)
-    text = []
-    for tw in user_tl:
-        if not tw['in_reply_to_status_id']:
-            text.append(tw['text'])
-    return text
-
 def save_csv(handles, count, csv_path):
     data_csv = pd.DataFrame(columns=['News','Tweets'])
     data_csv['News']=handles
     data = []
     for handle in handles:
-        user_tl = twitter.statuses.user_timeline(screen_name=handle, count=count)
+        user_tl = twitter.statuses.user_timeline(screen_name=handle, count=count,tweet_mode="extended")
         text = []
         for tw in user_tl:
             if not tw['in_reply_to_status_id']:
-                text.append(tw['text'].encode("utf-8"))
+                text.append(tw['full_text'].encode("utf-8"))
         data.append(text)
     data_csv['Tweets']=data
     data_csv.to_csv(csv_path)
     return data_csv
 
+"""
+url_L = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=2&title='
+url_L2 = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=2&title=&page=1'
+url_R = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=4&title='
+url_C = 'https://www.allsides.com/media-bias/media-bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=3&title='
+
+
+left_news = get_list(url_L)
+left_news = left_news + get_list(url_L2)
+right_news = get_list(url_R)
+center_news = get_list(url_C)
+
+left_handles = get_screen_names(left_news)
+right_handles = get_screen_names(right_news)
+center_handles = get_screen_names(center_news)
+
+count = 5000
+csv_left = save_csv(left_handles, count,'../data/left1.csv')
+csv_right = save_csv(right_handles, count,'../data/right1.csv')
+csv_center = save_csv(center_handles, count,'../data/center1.csv')
+
+print("all done!")
+"""
+save_csv(['snoiboi'],1000,'../data/sample_sonia.csv')
