@@ -320,10 +320,10 @@
 								{% for c in contest_candidates_federal %}
 								<div class="col candidate">
 									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
+										<img src="{{ c.imgUrl }}" class="candidate-photo">
 									</div>
 									<p class="candidate-name">{{ c.name }}</p>
-									<p class="candidate-position">{{ c.imgUrl }}</p>
+									<p class="candidate-position">{{ c.office }}</p>
 								</div>
 								{% endfor %}
 							</div>
@@ -331,10 +331,10 @@
 								{% for c in contest_candidates_state %}
 								<div class="col candidate">
 									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
+										<img src="{{ c.imgUrl }}" class="candidate-photo">
 									</div>
 									<p class="candidate-name">{{ c.name }}</p>
-									<p class="candidate-position">{{ c.imgUrl }}</p>
+									<p class="candidate-position">{{ c.office }}</p>
 								</div>
 								{% endfor %}
 							</div>
@@ -342,7 +342,7 @@
 								{% for c in contest_candidates_local %}
 								<div class="col candidate">
 									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
+										<img src="{{ c.imgUrl }}" class="candidate-photo">
 									</div>
 									<p class="candidate-name">{{ c.name }}</p>
 									<p class="candidate-position">{{ c.office }}</p>
