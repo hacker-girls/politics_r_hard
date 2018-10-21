@@ -11,6 +11,7 @@ twitter = Twitter (
 	auth=OAuth(OAUTH_TOKEN, OAUTH_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 ) 
 
+<<<<<<< HEAD
 def get_tweets_db(name):	
 
 	data = {'Sources': [], 'Tweets': []}
@@ -33,3 +34,40 @@ def get_tweets_db(name):
 		return df
 
 	return False
+=======
+def get_verf_tweets(names):	
+
+	data = {'Sources': [], 'Tweets': []}
+
+	for name in names:
+		result_accts = twitter.users.search(q = name)
+		user_found = False
+
+		for acct in result_accts:
+			if acct["verified"] == True:
+				user_found = True
+				data['Sources'].append(name)
+				tlist = []
+				for t in twitter.statuses.user_timeline(count=2000, screen_name=acct["screen_name"]):
+					tlist.append(t['text'])
+				data['Tweets'].append(tlist)
+				break
+
+		if user_found:
+			df = pd.DataFrame(data, columns=['Sources', 'Tweets'])
+
+	return df
+
+def get_handle_tweets(handle):
+
+	data = {'Sources': [], 'Tweets': []}
+	data['Sources'].append(twitter.users.lookup(handle))
+
+	for t in twitter.statuses.user_timeline(count=2000, screen_name=handle):
+				tlist.append(t['text'])
+			data['Tweets'].append(tlist)
+
+	return df
+
+
+>>>>>>> natalie
