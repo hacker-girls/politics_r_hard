@@ -23,9 +23,6 @@ twitter = Twitter (
 	auth=OAuth(OAUTH_TOKEN, OAUTH_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 )
 
-app = Flask(__name__)
-
-@app.route('/', methods=['POST'])
 def model(user_df):
 
         total_df = pd.read_csv('./data/total.csv')
@@ -44,29 +41,40 @@ def model(user_df):
                 return predicted
 
         pred = piped_vect(total_df['Tweets'],total_df['pol'],user_df['Tweets'])
-        print pred
+        return pred
 
+<<<<<<< HEAD
+=======
+
+app = Flask(__name__)
+
+@app.route('/', methods=['POST'])
+
+>>>>>>> 1e392c7a1ca5fb13d57dea98fdfd1cbf40b56cff
 def form_input():
 	if request.method == 'POST':
 		screen_name = request.form['screen_name']
 		location = request.form['location']
 
 	# user_tweets = twitter.statuses.user_timeline(count=1000, screen_name=screen_name)
-	
+
 	data = {'Sources': [], 'Tweets': []}
 	data['Sources'].append(screen_name)
 
-	for t in twitter.statuses.user_timeline(count=1000, screen_name=handle, tweet_mode="extended"):
+	tlist = []
+
+	for t in twitter.statuses.user_timeline(count=1000, screen_name=screen_name, tweet_mode="extended"):
 		tlist.append(t['full_text'].encode("utf-8"))
 	data['Tweets'].append(tlist)
 
 	df = pd.DataFrame(data, columns=['Sources', 'Tweets'])
+
 	# app.logger.debug(itpTweets)
 
-        #DF IS THE IMPORTANT DATAFRAME
-        #DF->MODEL
-        pred = model(df)
-        
+	    #DF IS THE IMPORTANT DATAFRAME
+	    #DF->MODEL
+	pred = model(df)
+	    
 	address = location
 
 	params = {
@@ -166,6 +174,7 @@ def form_input():
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
 			'user_tweets' : user_tweets,
+			'pred' : pred,
 			'election': election,
 			'contest_type' : contest_type,
 			'contest_office_federal' : contest_office_federal,
