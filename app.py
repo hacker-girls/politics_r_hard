@@ -27,11 +27,14 @@ def form_input():
 	data = {'Sources': [], 'Tweets': []}
 	data['Sources'].append(screen_name)
 
-	for t in twitter.statuses.user_timeline(count=1000, screen_name=handle, tweet_mode="extended"):
+	tlist = []
+
+	for t in twitter.statuses.user_timeline(count=10, screen_name=handle, tweet_mode="extended"):
 		tlist.append(t['full_text'].encode("utf-8"))
 	data['Tweets'].append(tlist)
 
 	df = pd.DataFrame(data, columns=['Sources', 'Tweets'])
+
 	# app.logger.debug(itpTweets)
 
 	address = location
