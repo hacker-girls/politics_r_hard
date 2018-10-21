@@ -189,7 +189,14 @@
 						<div class="races">
 							<div class="collapse" id="fed-races">
 								<table style="width:100%;">
-									<tr class="races-row">
+									{% for c in contest_office %}
+										<tr class="races-row">
+											<th>Date</th>
+											<td>{{ c }}</td>
+											<td>Info?</td>
+										</tr>
+										{% endfor %}
+									<!-- <tr class="races-row">
 										<th>Date</th>
 										<td>Position</td>
 										<td>Info?</td>
@@ -208,15 +215,10 @@
 										<th>Date</th>
 										<td>Position</td>
 										<td>Info?</td>
-									</tr>
-									<tr class="races-row">
-										<th>Date</th>
-										<td>Position</td>
-										<td>Info?</td>
-									</tr>
+									</tr> -->
 								</table>
 							</div>
-							<div class="collapse" id="state-races">
+							<!-- <div class="collapse" id="state-races">
 								<table style="width:100%;">
 									<tr class="races-row">
 										<th>Date</th>
@@ -273,7 +275,7 @@
 										<td>Info?</td>
 									</tr>
 								</table>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
