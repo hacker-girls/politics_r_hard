@@ -50,24 +50,60 @@ def form_input():
 			if 'country' in contest['level']:
 				contest_office_federal.append(contest['office'])
 				for c in contest['candidates']:
-					contest_candidates_federal.append({'name': c['name'], 'office': contest['office']})
-			elif 'administrativeArea1' in contest['level']:
-				contest_office_state.append(contest['office'])
-				for c in contest['candidates']:
+					if c['party'] == 'Democratic Party':
+						partyColor = 'blue'
+					elif c['party'] == 'Republican Party':
+						partyColor = 'red'
+					else:
+						partyColor = 'grey'
+
 					splitName = c['name'].split();
 					formattedName = splitName[0] + "%20" + splitName[1]
 					imgRequest = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + formattedName + "&format=json&prop=pageimages&formatversion=2")
 					imgData = imgRequest.json()
 					if 'thumbnail' in imgData['query']['pages'][0]:
 						imgUrl = imgData['query']['pages'][0]['thumbnail']['source']
-						contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': imgUrl})
+						contest_candidates_federal.append({'name': c['name'], 'office': contest['office'], 'imgUrl': imgUrl, 'partyColor': partyColor})
 					else:
-						contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': 'https://freeiconshop.com/wp-content/uploads/edd/person-solid.png'})
-					# contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': imgData['query']['pages'][0]['thumbnail']})
+						contest_candidates_federal.append({'name': c['name'], 'office': contest['office'], 'imgUrl': 'https://freeiconshop.com/wp-content/uploads/edd/person-solid.png', 'partyColor': partyColor})
+			elif 'administrativeArea1' in contest['level']:
+				contest_office_state.append(contest['office'])
+				for c in contest['candidates']:
+					if c['party'] == 'Democratic Party':
+						partyColor = 'blue'
+					elif c['party'] == 'Republican Party':
+						partyColor = 'red'
+					else:
+						partyColor = 'grey'
+
+					splitName = c['name'].split();
+					formattedName = splitName[0] + "%20" + splitName[1]
+					imgRequest = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + formattedName + "&format=json&prop=pageimages&formatversion=2")
+					imgData = imgRequest.json()
+					if 'thumbnail' in imgData['query']['pages'][0]:
+						imgUrl = imgData['query']['pages'][0]['thumbnail']['source']
+						contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': imgUrl, 'partyColor': partyColor})
+					else:
+						contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': 'https://freeiconshop.com/wp-content/uploads/edd/person-solid.png', 'partyColor': partyColor})
 			else:
 				contest_office_local.append(contest['office'])
 				for c in contest['candidates']:
-					contest_candidates_local.append({'name': c['name'], 'office': contest['office']})
+					if c['party'] == 'Democratic Party':
+						partyColor = 'blue'
+					elif c['party'] == 'Republican Party':
+						partyColor = 'red'
+					else:
+						partyColor = 'grey'
+
+					splitName = c['name'].split();
+					formattedName = splitName[0] + "%20" + splitName[1]
+					imgRequest = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + formattedName + "&format=json&prop=pageimages&formatversion=2")
+					imgData = imgRequest.json()
+					if 'thumbnail' in imgData['query']['pages'][0]:
+						imgUrl = imgData['query']['pages'][0]['thumbnail']['source']
+						contest_candidates_local.append({'name': c['name'], 'office': contest['office'], 'imgUrl': imgUrl, 'partyColor': partyColor})
+					else:
+						contest_candidates_local.append({'name': c['name'], 'office': contest['office'], 'imgUrl': 'https://freeiconshop.com/wp-content/uploads/edd/person-solid.png', 'partyColor': partyColor})
 
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),

@@ -106,6 +106,7 @@
         	text-align: center;
         	font-weight: lighter;
         	font-size: 0.8em;
+        	overflow-wrap: break-word;
         }
         .table-wrapper {
         	overflow-y: auto;
@@ -246,7 +247,7 @@
 									<div class="candidate-photo-wrapper">
 										<img src="{{ c.imgUrl }}" class="candidate-photo">
 									</div>
-									<p class="candidate-name">{{ c.name }}</p>
+									<p class="candidate-name" style="background-color: {{ c.partyColor }}">{{ c.name }}</p>
 									<p class="candidate-position">{{ c.office }}</p>
 								</div>
 								{% endfor %}
@@ -257,7 +258,7 @@
 									<div class="candidate-photo-wrapper">
 										<img src="{{ c.imgUrl }}" class="candidate-photo">
 									</div>
-									<p class="candidate-name">{{ c.name }}</p>
+									<p class="candidate-name" style="background-color: {{ c.partyColor }}">{{ c.name }}</p>
 									<p class="candidate-position">{{ c.office }}</p>
 								</div>
 								{% endfor %}
@@ -268,7 +269,7 @@
 									<div class="candidate-photo-wrapper">
 										<img src="{{ c.imgUrl }}" class="candidate-photo">
 									</div>
-									<p class="candidate-name">{{ c.name }}</p>
+									<p class="candidate-name" style="background-color: {{ c.partyColor }}">{{ c.name }}</p>
 									<p class="candidate-position">{{ c.office }}</p>
 								</div>
 								{% endfor %}
