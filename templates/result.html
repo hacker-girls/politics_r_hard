@@ -148,6 +148,17 @@
 				$('.panel').css('transition', '0.3s ease')
 			}, 3200);
 
+			$(function() {
+			    var div = $('.candidate-name');
+			    console.log(div);
+			    var fontSize = parseInt(div.css('font-size'));
+
+			    do {
+			        fontSize--;
+			        div.css('font-size', fontSize.toString() + 'px');
+			    } while (div.width() >= 400);
+			});
+
 		});
 
 		function toggleButtonColor(button) {
