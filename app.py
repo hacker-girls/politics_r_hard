@@ -43,6 +43,24 @@ def model(user_df):
         pred = piped_vect(total_df['Tweets'],total_df['pol'],user_df['Tweets'])
         return pred
 
+def gen_Graph(user_df):
+        right_buzz = ['snowflake','MAGA','PC','illegals','pro-life','buildthewall','wall','LiberalLogic','Hoax','istandwithbrett','alllivesmatter','bluelivesmatter','antifa','red','tax cut','win','puppet','fake news']
+        left_buzz = ['metoo','lovewins','notmypresident','pro-choice','LGBT','reform','familiesbelongtogether','abolishICE','blacklivesmatter','nobannowall','marchforourlives','gun control','imwithher','feelthebern']
+
+        rightb = 0
+        leftb = 0
+
+        for tweets in user_df['Tweets']:
+                for word in right_buzz:
+                        if word.lower() in tweets.lower():
+                                rightb = rightb + 1
+                for word in left_buzz:
+                        if word in tweets:
+                                leftb = leftb + 1
+
+        return rightb,leftb
+
+
 <<<<<<< HEAD
 =======
 
@@ -74,7 +92,7 @@ def form_input():
 	    #DF IS THE IMPORTANT DATAFRAME
 	    #DF->MODEL
 	pred = model(df)
-	    
+	repubhit,demhit = gen_graph(df)
 	address = location
 
 	params = {
@@ -184,7 +202,7 @@ def form_input():
 			'contest_candidates_state' : contest_candidates_state,
 			'contest_candidates_local' : contest_candidates_local,
 			'polling_places_list' : polling_places,
-			'early_vote_sites_list' : early_vote_sites_list
+			'early_vote_sites_list' : early_vote_sites_list,
 		}
 
 	return flask.render_template("result.html", **templateData)
