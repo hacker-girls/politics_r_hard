@@ -66,9 +66,9 @@ def form_input():
 			'contest_type' : contest_type,
 			'contest_office' : contest_office,
 			'contest_level' : contest_level,
-			'contest_candidates_federal' : contest_candidates,
-			'contest_candidates_state' : contest_candidates,
-			'contest_candidates_local' : contest_candidates
+			'contest_candidates_federal' : contest_candidates_federal,
+			'contest_candidates_state' : contest_candidates_state,
+			'contest_candidates_local' : contest_candidates_local
 		}
 
 	return flask.render_template("result.html", **templateData)
