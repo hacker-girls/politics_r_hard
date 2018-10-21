@@ -62,7 +62,7 @@ def form_input():
 						imgUrl = imgData['query']['pages'][0]['thumbnail']['source']
 						contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': imgUrl})
 					else:
-						contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': 'not found'})
+						contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': 'placeholder.png'})
 					# contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': imgData['query']['pages'][0]['thumbnail']})
 			else:
 				contest_office_local.append(contest['office'])
