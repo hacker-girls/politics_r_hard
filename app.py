@@ -203,6 +203,8 @@ def form_input():
 			'contest_candidates_local' : contest_candidates_local,
 			'polling_places_list' : polling_places,
 			'early_vote_sites_list' : early_vote_sites_list,
+                'repubhit' : repubhit, #help what r the spacing
+                'demhit' : demhit
 		}
 
 	return flask.render_template("result.html", **templateData)
