@@ -150,13 +150,14 @@
 
 			$(function() {
 			    var div = $('.candidate-name');
-			    console.log(div);
-			    var fontSize = parseInt(div.css('font-size'));
+			    for (var i = 0; i < div.length; i++) {
+				    var fontSize = parseInt(div.css('font-size'));
 
-			    do {
-			        fontSize--;
-			        div.css('font-size', fontSize.toString() + 'px');
-			    } while (div.width() >= 130);
+				    do {
+				        fontSize--;
+				        div.css('font-size', fontSize.toString() + 'px');
+				    } while (div.width() >= 130);
+				}
 			});
 
 		});
