@@ -31,12 +31,12 @@ def form_input():
 	}
 
 	r = requests.get("https://www.googleapis.com/civicinfo/v2/voterinfo")
-	data = r.json.oads(r.text)
-
+	#data = r.json.loads(r.text)
+	data = "help"
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
 			'user_tweets' : user_tweets,
-			'data': data,
+			'hm': 'hi'
 		}
 
 	return flask.render_template("result.html", **templateData)
