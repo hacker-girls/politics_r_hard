@@ -53,7 +53,7 @@ def form_input():
 			for c in contest['candidates']:
 				if 'level' == 'country':
 					contest_candidates_federal.append({'name': c['name'], 'office': contest['office']})
-				else if 'level' == 'administrativeArea1':
+				elif 'level' == 'administrativeArea1':
 					contest_candidates_state.append({'name': c['name'], 'office': contest['office']})
 				else:
 					contest_candidates_local.append({'name': c['name'], 'office': contest['office']})
