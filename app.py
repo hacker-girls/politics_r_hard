@@ -58,7 +58,7 @@ def form_input():
 					formattedName = splitName[0] + "%20" + splitName[1]
 					imgRequest = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + formattedName + "&format=json&prop=pageimages")
 					imgData = imgRequest.json()
-					if 'source' in imgData:
+					if 'source' in imgData['query']['pages']['thumbnail']:
 						imgUrl = imgData['query']['pages']['thumbnail']['source']
 						contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': imgUrl})
 					else:
