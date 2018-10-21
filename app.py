@@ -25,7 +25,7 @@ def form_input():
 	# user_tweets = twitter.statuses.user_timeline(count=1000, screen_name=screen_name)
 	
 	data = {'Sources': [], 'Tweets': []}
-	data['Sources'].append(twitter.users.lookup(handle))
+	data['Sources'].append(screen_name)
 
 	for t in twitter.statuses.user_timeline(count=1000, screen_name=handle, tweet_mode="extended"):
 		tlist.append(t['full_text'].encode("utf-8"))
