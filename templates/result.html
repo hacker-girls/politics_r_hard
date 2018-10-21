@@ -189,13 +189,37 @@
 						<div class="races">
 							<div class="collapse" id="fed-races">
 								<table style="width:100%;">
-									{% for c in contest_office %}
+									{% for c in contest_office_federal %}
 										<tr class="races-row">
 											<th>Nov 6, 2018</th>
 											<td>{{ c }}</td>
 											<td></td>
 										</tr>
 										{% endfor %}
+								</table>
+							</div>
+							<div class="collapse" id="state-races">
+								<table style="width:100%;">
+									{% for c in contest_office_state %}
+										<tr class="races-row">
+											<th>Nov 6, 2018</th>
+											<td>{{ c }}</td>
+											<td></td>
+										</tr>
+										{% endfor %}
+								</table>
+							</div>
+							<div class="collapse" id="local-races">
+								<table style="width:100%;">
+									{% for c in contest_office_local %}
+										<tr class="races-row">
+											<th>Nov 6, 2018</th>
+											<td>{{ c }}</td>
+											<td></td>
+										</tr>
+										{% endfor %}
+								</table>
+							</div>
 									<!-- <tr class="races-row">
 										<th>Date</th>
 										<td>Position</td>
@@ -216,8 +240,7 @@
 										<td>Position</td>
 										<td>Info?</td>
 									</tr> -->
-								</table>
-							</div>
+
 							<!-- <div class="collapse" id="state-races">
 								<table style="width:100%;">
 									<tr class="races-row">
@@ -323,67 +346,6 @@
 								</div>
 								{% endfor %}
 							</div>
-								<!-- <div class="col candidate">
-									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
-									</div>
-									<p class="candidate-name">First Last</p>
-									<p class="candidate-position">Governor</p>
-								</div>
-								<div class="col candidate">
-									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
-									</div>
-									<p class="candidate-name">First Last</p>
-									<p class="candidate-position">Governor</p>
-								</div> -->
-
-							<!-- <div class="collapse candidate-block" id="state-candidates">
-								<div class="col candidate">
-									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
-									</div>
-									<p class="candidate-name">First Last</p>
-									<p class="candidate-position">Governor</p>
-								</div>
-								<div class="col candidate">
-									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
-									</div>
-									<p class="candidate-name">First Last</p>
-									<p class="candidate-position">Governor</p>
-								</div>
-								<div class="col candidate">
-									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
-									</div>
-									<p class="candidate-name">First Last</p>
-									<p class="candidate-position">Governor</p>
-								</div>
-							</div>
-							<div class="collapse candidate-block" id="local-candidates">
-								<div class="col candidate">
-									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
-									</div>
-									<p class="candidate-name">First Last</p>
-									<p class="candidate-position">Governor</p>
-								</div>
-								<div class="col candidate">
-									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
-									</div>
-									<p class="candidate-name">First Last</p>
-									<p class="candidate-position">Governor</p>
-								</div>
-								<div class="col candidate">
-									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
-									</div>
-									<p class="candidate-name">First Last</p>
-									<p class="candidate-position">Governor</p>
-								</div>
-							</div> -->
 						</div>
 					</div>
 				</div>
