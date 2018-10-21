@@ -46,21 +46,17 @@ def form_input():
 	for contest in contests:
 		if 'type' in contest:
 			contest_type.append(contest['type'])
-		if 'office' in contest:
-			if 'country' in contest['level']:
-				contest_office_federal.append(contest['office'])
-			elif 'administrativeArea1' in contest['level']:
-				contest_office_state.append(contest['office'])
-			else:
-				contest_office_local.append(contest['office'])
 		if 'level' in contest:
 			if 'country' in contest['level']:
+				contest_office_federal.append(contest['office'])
 				for c in contest['candidates']:
 					contest_candidates_federal.append({'name': c['name'], 'office': contest['office']})
 			elif 'administrativeArea1' in contest['level']:
+				contest_office_state.append(contest['office'])
 				for c in contest['candidates']:
 					contest_candidates_state.append({'name': c['name'], 'office': contest['office']})
 			else:
+				contest_office_local.append(contest['office'])
 				for c in contest['candidates']:
 					contest_candidates_local.append({'name': c['name'], 'office': contest['office']})
 
@@ -70,7 +66,9 @@ def form_input():
 			'election': election,
 			'contest_type' : contest_type,
 			'contest_office' : contest_office,
-			'contest_level' : contest_level,
+			'contest_office_federal' : contest_office_federal,
+			'contest_office_state' : contest_office_state,
+			'contest_office_local' : contest_office_local,
 			'contest_candidates_federal' : contest_candidates_federal,
 			'contest_candidates_state' : contest_candidates_state,
 			'contest_candidates_local' : contest_candidates_local
