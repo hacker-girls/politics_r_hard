@@ -42,13 +42,21 @@ def vocab_length(total):
         sum_ += len(row)
     return sum_
 
-def piped_vect(X,y,user_x):
+def piped_vect(X,y,tests):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)    
     text_clf = Pipeline([('vect', CountVectorizer(analyzer=pre_process,encoding='utf-8',strip_accents=['ascii','unicode'],max_df=0.8,min_df=0.3)),('tfidf',TfidfTransformer()),('clf', MultinomialNB()),])
     text_clf = text_clf.fit(X_train, y_train)
-    predicted = text_clf.predict(user_x)
-    print predicted
+    for test in tests:
+        predicted = text_clf.predict(test['Tweets'])
+        print test['News']
+        print predicted
 #    print (classification_report(y_test, predicted))
 
-user_df = pd.read_csv('../data/samples/sample_sonia.csv')
-piped_vect(total_df['Tweets'],total_df['pol'],user_df['Tweets'])
+sonia = pd.read_csv('../data/samples/sample_sonia.csv')
+trump = pd.read_csv('../data/samples/sample_trump.csv')
+natalie  = pd.read_csv('../data/samples/sample_nat.csv')
+maddie = pd.read_csv('../data/samples/sample_maddie.csv')
+ted = pd.read_csv('../data/samples/sample_ted.csv')
+helena = pd.read_csv('../data/samples/sample_helena.csv')
+tests = [sonia,trump,natalie,maddie,ted,helena]
+piped_vect(total_df['Tweets'],total_df['pol'],tests)

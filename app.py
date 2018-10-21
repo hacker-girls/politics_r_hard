@@ -24,38 +24,17 @@ twitter = Twitter (
 )
 
 def model(user_df):
-        def csv_to_df(pathname,val):
-                df = pd.read_csv(pathname).drop(['Unnamed: 0'],axis=1)
-                df = df.sample(frac=1).reset_index(drop=True) #shuffle it up
-                df['pol'] = np.full((df.shape[0],1),val)
-                return df
 
-        leftc = csv_to_df('/data/left_cong.csv',1)
-        leftc = leftc.rename(columns = {'Sources':'News'})
-        left = pd.concat([csv_to_df('/data/left1.csv',1),leftc],ignore_index=True)
-        rightc = csv_to_df('/data/right_cong.csv',-1)
-        rightc = rightc.rename(columns = {'Sources':'News'})
-        right = pd.concat([csv_to_df('/data/left1.csv',-1),rightc],ignore_index=True)
-        center = csv_to_df('/data/center1.csv',0)
-
-        total_df = pd.concat([left,center,right],ignore_index=True)
-        total_df = total_df.sample(frac=1).reset_index(drop=True)
-        
+        total_df = pd.read_csv('./data/total.csv')
         stop_words = set(stopwords.words('english'))
-        
+
         def pre_process(mess):
                 mess = nltk.word_tokenize(mess)
                 clean = [word.lower() for word in mess if word.lower() not in stop_words]
                 return clean
-        
-        def vocab_length(total):
-                sum_ = 0
-                for row in total:
-                        sum_ += len(row)
-                        return sum_
-                
+
         def piped_vect(X,y,user_x):
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)    
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
                 text_clf = Pipeline([('vect', CountVectorizer(analyzer=pre_process,encoding='utf-8',strip_accents=['ascii','unicode'],max_df=0.8,min_df=0.3)),('tfidf',TfidfTransformer()),('clf', MultinomialNB()),])
                 text_clf = text_clf.fit(X_train, y_train)
                 predicted = text_clf.predict(user_x)
@@ -64,10 +43,29 @@ def model(user_df):
         pred = piped_vect(total_df['Tweets'],total_df['pol'],user_df['Tweets'])
         return pred
 
+def gen_Graph(user_df):
+        right_buzz = ['snowflake','MAGA','PC','illegals','pro-life','buildthewall','wall','LiberalLogic','Hoax','istandwithbrett','alllivesmatter','bluelivesmatter','antifa','red','tax cut','win','puppet','fake news']
+        left_buzz = ['metoo','lovewins','notmypresident','pro-choice','LGBT','reform','familiesbelongtogether','abolishICE','blacklivesmatter','nobannowall','marchforourlives','gun control','imwithher','feelthebern']
+
+        rightb = 0
+        leftb = 0
+
+        for tweets in user_df['Tweets']:
+                for word in right_buzz:
+                        if word.lower() in tweets.lower():
+                                rightb = rightb + 1
+                for word in left_buzz:
+                        if word in tweets:
+                                leftb = leftb + 1
+
+
+        return rightb,leftb
+
 
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
+
 
 def form_input():
 	if request.method == 'POST':
@@ -92,7 +90,7 @@ def form_input():
 	    #DF IS THE IMPORTANT DATAFRAME
 	    #DF->MODEL
 	pred = model(df)
-	    
+
 	address = location
 
 	params = {
@@ -202,7 +200,9 @@ def form_input():
 			'contest_candidates_state' : contest_candidates_state,
 			'contest_candidates_local' : contest_candidates_local,
 			'polling_places_list' : polling_places,
-			'early_vote_sites_list' : early_vote_sites_list
+			'early_vote_sites_list' : early_vote_sites_list,
+                'repubhit' : repubhit, #help what r the spacing
+                'demhit' : demhit
 		}
 
 	return flask.render_template("result.html", **templateData)
