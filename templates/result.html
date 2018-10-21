@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Result</title>
+	<link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500|Roboto|Roboto+Condensed" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    		crossorigin="anonymous"></script>
+    <style>
+	    body {
+	          font-family: 'Oswald', sans-serif;
+	    }
+        h1 {
+          font-family: 'Oswald', sans-serif;
+          font-size: 5em;
+        }
+        th, td {
+        	padding: 4px;
+        	margin-bottom: 4px;
+        }
+        th {
+        	width: 100px;
+        }
+        table {
+        	border-collapse: separate;
+        	border-spacing: 0px 5px;
+        }
+        img {
+        	object-fit: cover;
+        }
+
+        .panel {
+        	border-style: solid;
+        	border-width: 10px;
+        	border-color: white;
+        	display: none;
+        }
+        .panel:hover {
+        	border-width: 1px;
+        	transition: 0.3s ease;
+        }
+        .panel-title {
+        	color:white;
+        	margin-top: 7px;
+        	text-transform: uppercase;
+        }
+        .races {
+        	height: 65%;
+        	overflow-y: auto;
+        }
+        .races-row {
+        	background-color: white;
+        	width:90%;
+        	transition: 0.5s ease;
+        }
+        .races-row:hover {
+        	opacity: 0.5;
+        	transition: 0.5s ease;
+        }
+        .race-level-selector, .candidate-level-selector {
+        	font-size: 0.8em;
+        	padding: 0px 5px;
+        }
+        .candidate {
+        	height:100%;
+        	width: 130px;
+        	display: inline-block;
+        	transition: 0.5s ease;
+        }
+        .candidate:hover {
+        	opacity: 0.5;
+        	transition: 0.5s ease;
+        }
+        .candidates-wrapper {
+        	overflow-x: auto;
+        	white-space:nowrap;
+        }
+        .candidate-block {
+        	display: inline-block;
+        }
+        .candidate-photo-wrapper {
+        	height: 60%;
+        	margin-bottom: 3px;
+        	text-align: center;
+        }
+        .candidate-photo {
+        	border-radius: 50%;
+        	max-width: 50%;
+        	height:auto;
+        }
+        .candidate-name {
+        	color:white;
+        	text-transform: uppercase;
+        	text-align: center;
+        	margin-bottom: -3px;
+        }
+        .candidate-position {
+        	color:white;
+        	text-align: center;
+        	font-weight: lighter;
+        	font-size: 0.8em;
+        	overflow-wrap: break-word;
+        }
+        .table-wrapper {
+        	overflow-y: auto;
+        	height: 100%;
+        }
+        .polling-place {
+        	display: inline-block;
+        }
+        .early-voting-site {
+        	display: inline-block;
+        }
+
+        #content1 {
+        	height: 50vh;
+        }
+        #content2 {
+        	height: 30vh;
+        }
+        #ideology {
+        	background-color: #C6121F;
+        	overflow-y: auto;
+        }
+        #races {
+        	background-color: #0071BC;
+        }
+        #candidates {
+        	background-color: #333333;
+        }
+        #get-involved {
+        	background-color: #E2CF17;
+        }
+        #race-level-selector-group, #candidate-level-selector-group {
+        	float:right;
+        	margin-top: 7px;
+        }
+	</style>
+	<script>
+		$(document).ready(function() {
+			$('#ideology').fadeIn(800);
+			$('#races').delay(800).fadeIn(800);
+			$('#candidates').delay(1600).fadeIn(800);
+			$('#get-involved').delay(2400).fadeIn(800);
+
+			setTimeout(function() {
+				$('.panel').css('transition', '0.3s ease')
+			}, 3200);
+
+			$(function() {
+			    var div = $('.candidate-name');
+			    for (var i = 0; i < div.length; i++) {
+				    var fontSize = parseInt(div.css('font-size'));
+
+				    do {
+				        fontSize--;
+				        div.css('font-size', fontSize.toString() + 'px');
+				    } while (div.width() >= 130);
+				}
+			});
+
+		});
+
+		function toggleButtonColor(button) {
+			if (!button.style.backgroundColor) {
+				button.style.backgroundColor = 'red';
+			} else {
+				button.style.backgroundColor = '';
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row justify-content-center">
+			<h1>RESULTS</h1>
+		</div>
+		<hr>
+
+		<div class="row" id="content1">
+			<div class="col-5 panel" id="ideology">
+				<h3 class="panel-title">Ideology</h3>
+				<b>{{screen_name}}</b>
+				<h1>{{pred}}</h1>
+				<div id="piechart"></div>
+					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+					<script type="text/javascript">
+					// Load google charts
+					google.charts.load('current', {'packages':['corechart']});
+					google.charts.setOnLoadCallback(drawChart);
+
+					// Draw the chart and set the chart values
+					function drawChart() {
+					  var data = google.visualization.arrayToDataTable([
+					  ['Party', 'Hits'],
+					  ['Democratic', 8],
+					  ['Republican', 2],
+					]);
+
+					  // Optional; add a title and set the width and height of the chart
+					  var options = {'title':'Political Tendencies', 'width':300, 'height':200};
+
+					  // Display the chart inside the <div> element with id="piechart"
+					  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+					  chart.draw(data, options);
+					}
+					</script>
+			</div>
+			<div class="col-7">
+				<div class="row panel" id="races" style="height:50%">
+					<div class="col-12" style="height: 100%">
+						<div>
+							<h3 class="panel-title" style="display: inline-block">Upcoming Races</h3>
+							<div id="race-level-selector-group">
+								<button class="btn btn-primary race-level-selector" data-toggle="collapse" data-target="#fed-races" aria-expanded="true" aria-controls="fed-races" style="display: inline-block" onclick="toggleButtonColor(this)">federal</button>
+								<button class="btn btn-primary race-level-selector" data-toggle="collapse" data-target="#state-races" aria-expanded="false" aria-controls="state-races" style="display: inline-block" onclick="toggleButtonColor(this)">state</button>
+								<button class="btn btn-primary race-level-selector" data-toggle="collapse" data-target="#local-races" aria-expanded="false" aria-controls="local-races"style="display: inline-block" onclick="toggleButtonColor(this)">local</button>
+							</div>
+						</div>
+						<div class="races">
+							<div class="collapse" id="fed-races">
+								<table style="width:100%;">
+									{% for c in contest_office_federal %}
+										<tr class="races-row">
+											<th>Nov 6, 2018</th>
+											<td>{{ c }}</td>
+											<td></td>
+										</tr>
+										{% endfor %}
+								</table>
+							</div>
+							<div class="collapse" id="state-races">
+								<table style="width:100%;">
+									{% for c in contest_office_state %}
+										<tr class="races-row">
+											<th>Nov 6, 2018</th>
+											<td>{{ c }}</td>
+											<td></td>
+										</tr>
+										{% endfor %}
+								</table>
+							</div>
+							<div class="collapse" id="local-races">
+								<table style="width:100%;">
+									{% for c in contest_office_local %}
+										<tr class="races-row">
+											<th>Nov 6, 2018</th>
+											<td>{{ c }}</td>
+											<td></td>
+										</tr>
+										{% endfor %}
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row panel" id="candidates" style="height:50%">
+					<div class="col-12">
+						<div>
+							<h3 class="panel-title" style="display:inline-block;">Candidates</h3>
+							<div id="candidate-level-selector-group">
+									<button class="btn btn-primary candidate-level-selector" data-toggle="collapse" data-target="#fed-candidates" aria-expanded="true" aria-controls="fed-races" style="display: inline-block" onclick="toggleButtonColor(this)">federal</button>
+									<button class="btn btn-primary candidate-level-selector" data-toggle="collapse" data-target="#state-candidates" aria-expanded="false" aria-controls="state-races" style="display: inline-block" onclick="toggleButtonColor(this)">state</button>
+									<button class="btn btn-primary candidate-level-selector" data-toggle="collapse" data-target="#local-candidates" aria-expanded="false" aria-controls="local-races"style="display: inline-block" onclick="toggleButtonColor(this)">local</button>
+							</div>
+						</div>
+						<div class="candidates-wrapper">
+							<div class="collapse candidate-block" id="fed-candidates">
+								{% for c in contest_candidates_federal %}
+								<div class="col candidate">
+									<div class="candidate-photo-wrapper">
+										<img src="{{ c.imgUrl }}" class="candidate-photo">
+									</div>
+									<p class="candidate-name" style="background-color: {{ c.partyColor }}">{{ c.name }}</p>
+									<p class="candidate-position">{{ c.office }}</p>
+								</div>
+								{% endfor %}
+							</div>
+							<div class="collapse candidate-block" id="state-candidates">
+								{% for c in contest_candidates_state %}
+								<div class="col candidate">
+									<div class="candidate-photo-wrapper">
+										<img src="{{ c.imgUrl }}" class="candidate-photo">
+									</div>
+									<p class="candidate-name" style="background-color: {{ c.partyColor }}">{{ c.name }}</p>
+									<p class="candidate-position">{{ c.office }}</p>
+								</div>
+								{% endfor %}
+							</div>
+							<div class="collapse candidate-block" id="local-candidates">
+								{% for c in contest_candidates_local %}
+								<div class="col candidate">
+									<div class="candidate-photo-wrapper">
+										<img src="{{ c.imgUrl }}" class="candidate-photo">
+									</div>
+									<p class="candidate-name" style="background-color: {{ c.partyColor }}">{{ c.name }}</p>
+									<p class="candidate-position">{{ c.office }}</p>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="content2">
+			<div class="col-12 panel" id="get-involved">
+				<h3 class="panel-title">Now Go Vote</h3>
+					{% for p in polling_places_list %}
+					<div class="polling-place">
+						<p class="type">Polling Place</p>
+						<p class="place-name">{{ p.name }}</p>
+						<p class="street-address">{{ p.street_address }}</p>
+						<p class="city">{{ p.city }}</p>
+						<p class="state">{{ p.state }}</p>
+						<p class="zip">{{ p.zip }}</p>
+					</div>
+					{% endfor %}
+
+					{% for s in early_vote_sites_list %}
+					<div class="early-voting-site">
+						<p class="type">Early Vote Site</p>
+						<p class="place-name">{{ s.name }}</p>
+						<p class="street-address">{{ s.street_address }}</p>
+						<p class="city">{{ s.city }}</p>
+						<p class="state">{{ s.state }}</p>
+						<p class="zip">{{ s.zip }}</p>
+					</div>
+					{% endfor %}
+			</div>
+		</div>
+	</div>
+</body>
