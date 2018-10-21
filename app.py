@@ -54,7 +54,11 @@ def form_input():
 			elif 'administrativeArea1' in contest['level']:
 				contest_office_state.append(contest['office'])
 				for c in contest['candidates']:
-					contest_candidates_state.append({'name': c['name'], 'office': contest['office']})
+					splitName = c['name'].split();
+					formattedName = splitName[0] + "%20" + splitName[1]
+					if 'source' in requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + formattedName + "&format=json&prop=pageimages")['query']['pages'][0]['thumbnail']:
+						imgUrl = requests.get("https://en.wikipedia.org/w/api.php?action=query&titles=" + formattedName + "&format=json&prop=pageimages")['query']['pages'][0]['thumbnail']['source']
+					contest_candidates_state.append({'name': c['name'], 'office': contest['office'], 'imgUrl': imgUrl})
 			else:
 				contest_office_local.append(contest['office'])
 				for c in contest['candidates']:

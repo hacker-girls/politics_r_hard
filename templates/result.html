@@ -25,6 +25,9 @@
         	padding: 4px;
         	margin-bottom: 4px;
         }
+        th {
+        	width: 100px;
+        }
         table {
         	border-collapse: separate;
         	border-spacing: 0px 5px;
@@ -320,7 +323,7 @@
 										<img src="test.jpg" class="candidate-photo">
 									</div>
 									<p class="candidate-name">{{ c.name }}</p>
-									<p class="candidate-position">{{ c.office }}</p>
+									<p class="candidate-position">{{ c.imgUrl }}</p>
 								</div>
 								{% endfor %}
 							</div>
