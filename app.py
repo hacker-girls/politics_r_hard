@@ -4,15 +4,15 @@ from flask import Flask, request, render_template
 from twitter import *
 import json
 import requests
-import pandas as pd
-import numpy as np
-import nltk
-from nltk.corpus import stopwords
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.pipeline import Pipeline
-from sklearn.metrics import classification_report, confusion_matrix
+# import pandas as pd
+# import numpy as np
+# import nltk
+# from nltk.corpus import stopwords
+# from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
+# from sklearn.model_selection import train_test_split
+# from sklearn.naive_bayes import MultinomialNB
+# from sklearn.pipeline import Pipeline
+# from sklearn.metrics import classification_report, confusion_matrix
 
 OAUTH_TOKEN="2464717370-ztIheNqKFIr9ll1ZG3OEa1SxRPTGY8k1XL3Ukj0"
 OAUTH_SECRET="doEQPqBTLo22FrakNfY2q3jdLJyary6TFcLT8sv8AJes7"
@@ -23,40 +23,40 @@ twitter = Twitter (
 	auth=OAuth(OAUTH_TOKEN, OAUTH_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 )
 
-def model(user_df):
+# def model(user_df):
 
-        total_df = pd.read_csv('./data/total.csv')
-        stop_words = set(stopwords.words('english'))
+#         total_df = pd.read_csv('./data/total.csv')
+#         stop_words = set(stopwords.words('english'))
 
-        def pre_process(mess):
-                mess = nltk.word_tokenize(mess)
-                clean = [word.lower() for word in mess if word.lower() not in stop_words]
-                return clean
+#         def pre_process(mess):
+#                 mess = nltk.word_tokenize(mess)
+#                 clean = [word.lower() for word in mess if word.lower() not in stop_words]
+#                 return clean
 
-        def piped_vect(X,y,user_x):
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-                text_clf = Pipeline([('vect', CountVectorizer(analyzer=pre_process,encoding='utf-8',strip_accents=['ascii','unicode'],max_df=0.8,min_df=0.3)),('tfidf',TfidfTransformer()),('clf', MultinomialNB()),])
-                text_clf = text_clf.fit(X_train, y_train)
-                predicted = text_clf.predict(user_x)
-                return predicted
+#         def piped_vect(X,y,user_x):
+#                 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+#                 text_clf = Pipeline([('vect', CountVectorizer(analyzer=pre_process,encoding='utf-8',strip_accents=['ascii','unicode'],max_df=0.8,min_df=0.3)),('tfidf',TfidfTransformer()),('clf', MultinomialNB()),])
+#                 text_clf = text_clf.fit(X_train, y_train)
+#                 predicted = text_clf.predict(user_x)
+#                 return predicted
 
-        pred = piped_vect(total_df['Tweets'],total_df['pol'],user_df['Tweets'])
-        return pred
+#         pred = piped_vect(total_df['Tweets'],total_df['pol'],user_df['Tweets'])
+#         return pred
 
-def gen_Graph(user_df):
-        right_buzz = ['snowflake','MAGA','PC','illegals','pro-life','buildthewall','wall','LiberalLogic','Hoax','istandwithbrett','alllivesmatter','bluelivesmatter','antifa','red','tax cut','win','puppet','fake news']
-        left_buzz = ['metoo','lovewins','notmypresident','pro-choice','LGBT','reform','familiesbelongtogether','abolishICE','blacklivesmatter','nobannowall','marchforourlives','gun control','imwithher','feelthebern']
+# def gen_Graph(user_df):
+#         right_buzz = ['snowflake','MAGA','PC','illegals','pro-life','buildthewall','wall','LiberalLogic','Hoax','istandwithbrett','alllivesmatter','bluelivesmatter','antifa','red','tax cut','win','puppet','fake news']
+#         left_buzz = ['metoo','lovewins','notmypresident','pro-choice','LGBT','reform','familiesbelongtogether','abolishICE','blacklivesmatter','nobannowall','marchforourlives','gun control','imwithher','feelthebern']
 
-        rightb = 0
-        leftb = 0
+#         rightb = 0
+#         leftb = 0
 
-        for tweets in user_df['Tweets']:
-                for word in right_buzz:
-                        if word.lower() in tweets.lower():
-                                rightb = rightb + 1
-                for word in left_buzz:
-                        if word in tweets:
-                                leftb = leftb + 1
+#         for tweets in user_df['Tweets']:
+#                 for word in right_buzz:
+#                         if word.lower() in tweets.lower():
+#                                 rightb = rightb + 1
+#                 for word in left_buzz:
+#                         if word in tweets:
+#                                 leftb = leftb + 1
 
 
 
@@ -199,8 +199,6 @@ def form_input():
 			'contest_candidates_local' : contest_candidates_local,
 			'polling_places_list' : polling_places,
 			'early_vote_sites_list' : early_vote_sites_list,
-                'repubhit' : repubhit, #help what r the spacing
-                'demhit' : demhit
 		}
 
 	return flask.render_template("result.html", **templateData)
