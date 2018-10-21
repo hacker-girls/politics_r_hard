@@ -9,4 +9,4 @@ twitter==1.18.0
 requests==2.20.0
 pandas==0.23.4
 nltk==3.3
-sklearn==0.19.2
+scikit-learn==0.20.0
