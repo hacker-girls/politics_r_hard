@@ -40,7 +40,10 @@ def form_input():
 	else:
 		polling_places = []
 	polling_places_list = []
-	early_vote_sites = data['earlyVoteSites']
+	if 'earlyVoteSites' in data:
+		early_vote_sites = data['earlyVoteSites']
+	else:
+		early_vote_sites = []
 	early_vote_sites_list = []
 	contests = data['contests']
 	contest_type = []
