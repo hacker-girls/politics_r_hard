@@ -65,7 +65,6 @@ def form_input():
 			'user_tweets' : user_tweets,
 			'election': election,
 			'contest_type' : contest_type,
-			'contest_office' : contest_office,
 			'contest_office_federal' : contest_office_federal,
 			'contest_office_state' : contest_office_state,
 			'contest_office_local' : contest_office_local,
