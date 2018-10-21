@@ -45,4 +45,26 @@ def get_handle_tweets(handle):
 
 	return df
 
+def get_tweets_db(name):	
+
+	data = {'Sources': [], 'Tweets': []}
+
+	result_accts = twitter.users.search(q = name)
+	user_found = False
+
+	for acct in result_accts:
+		if acct["verified"] == True:
+			user_found = True
+			data['Sources'] = name
+			tlist = []
+			for t in twitter.statuses.user_timeline(count=2000, screen_name=acct["screen_name"]):
+				tlist.append(t['text'])
+			data['Tweets'].append(tlist)
+			break
+
+	if user_found:
+		df = pd.DataFrame(data, columns=['Sources', 'Tweets'])
+		return df
+
+	return False
 
