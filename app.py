@@ -45,9 +45,11 @@ def form_input():
 			contest_type.append(contest['type'])
 		if 'office' in contest:
 			contest_office.append(contest['office'])
-		contest_level.append(contest['level'])
-		for c in contest['candidates']:
-			contest_candidates.append(c['name'])
+		if 'level' in contest:
+			contest_level.append(contest['level'])
+		if 'candidates' in contest:
+			for c in contest['candidates']:
+				contest_candidates.append(c['name'])
 
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
