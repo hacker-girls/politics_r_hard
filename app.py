@@ -110,10 +110,10 @@ def form_input():
 						contest_candidates_local.append({'name': c['name'], 'office': contest['office'], 'imgUrl': 'https://freeiconshop.com/wp-content/uploads/edd/person-solid.png', 'partyColor': partyColor})
 
 	for place in polling_places:
-		polling_places_list.append({'name': place['locationName'], 'address': place['line1'], 'city': place['city'], 'state': place['state'], 'zip': place['zip']})
+		polling_places_list.append({'name': place['address']['locationName'], 'address': place['address']['line1'], 'city': place['address']['city'], 'state': place['address']['state'], 'zip': place['address']['zip']})
 
 	for site in early_vote_sites:
-		early_vote_sites_list.append({'name': place['locationName'], 'address': place['line1'], 'city': place['city'], 'state': place['state'], 'zip': place['zip']})
+		early_vote_sites_list.append({'name': place['address']['locationName'], 'address': place['address']['line1'], 'city': place['address']['city'], 'state': place['address']['state'], 'zip': place['address']['zip']})
 
 
 	templateData = {
