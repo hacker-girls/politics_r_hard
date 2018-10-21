@@ -12,7 +12,7 @@ CONSUMER_SECRET="SUZK3xOyW4DJzY0rqr8pr2PQuVjEjEPgUNd73fMYd5eXSg4sY9"
 
 twitter = Twitter (
 	auth=OAuth(OAUTH_TOKEN, OAUTH_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
-) 
+)
 
 app = Flask(__name__)
 
@@ -49,7 +49,7 @@ def form_input():
 			contest_level.append(contest['level'])
 		if 'candidates' in contest:
 			for c in contest['candidates']:
-				contest_candidates.append(c['name'])
+				contest_candidates.append({'name': c['name'], contest['office']})
 
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),

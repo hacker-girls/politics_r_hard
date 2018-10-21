@@ -189,10 +189,10 @@
 						<div class="races">
 							<div class="collapse" id="fed-races">
 								<table style="width:100%;">
-									{% for c in contests %}
+									{% for c in contest_office %}
 										<tr class="races-row">
 											<th>Nov 6, 2018</th>
-											<td>{{ c['office'] }}</td>
+											<td>{{ c }}</td>
 											<td></td>
 										</tr>
 										{% endfor %}
@@ -291,7 +291,16 @@
 						</div>
 						<div class="candidates-wrapper">
 							<div class="collapse candidate-block" id="fed-candidates">
+								{% for c in contest_candidates %}
 								<div class="col candidate">
+									<div class="candidate-photo-wrapper">
+										<img src="test.jpg" class="candidate-photo">
+									</div>
+									<p class="candidate-name">{{ c }}</p>
+									<p class="candidate-position">Governor</p>
+								</div>
+								{% endfor %}
+								<!-- <div class="col candidate">
 									<div class="candidate-photo-wrapper">
 										<img src="test.jpg" class="candidate-photo">
 									</div>
@@ -304,16 +313,9 @@
 									</div>
 									<p class="candidate-name">First Last</p>
 									<p class="candidate-position">Governor</p>
-								</div>
-								<div class="col candidate">
-									<div class="candidate-photo-wrapper">
-										<img src="test.jpg" class="candidate-photo">
-									</div>
-									<p class="candidate-name">First Last</p>
-									<p class="candidate-position">Governor</p>
-								</div>
+								</div> -->
 							</div>
-							<div class="collapse candidate-block" id="state-candidates">
+							<!-- <div class="collapse candidate-block" id="state-candidates">
 								<div class="col candidate">
 									<div class="candidate-photo-wrapper">
 										<img src="test.jpg" class="candidate-photo">
@@ -358,7 +360,7 @@
 									<p class="candidate-name">First Last</p>
 									<p class="candidate-position">Governor</p>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
