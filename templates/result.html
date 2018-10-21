@@ -291,7 +291,7 @@
 						</div>
 						<div class="candidates-wrapper">
 							<div class="collapse candidate-block" id="fed-candidates">
-								{% for c in contest_candidates %}
+								{% for c in contest_candidates_federal %}
 								<div class="col candidate">
 									<div class="candidate-photo-wrapper">
 										<img src="test.jpg" class="candidate-photo">
@@ -300,6 +300,29 @@
 									<p class="candidate-position">{{ c.office }}</p>
 								</div>
 								{% endfor %}
+							</div>
+							<div class="collapse candidate-block" id="state-candidates">
+								{% for c in contest_candidates_state %}
+								<div class="col candidate">
+									<div class="candidate-photo-wrapper">
+										<img src="test.jpg" class="candidate-photo">
+									</div>
+									<p class="candidate-name">{{ c.name }}</p>
+									<p class="candidate-position">{{ c.office }}</p>
+								</div>
+								{% endfor %}
+							</div>
+							<div class="collapse candidate-block" id="local-candidates">
+								{% for c in contest_candidates_local %}
+								<div class="col candidate">
+									<div class="candidate-photo-wrapper">
+										<img src="test.jpg" class="candidate-photo">
+									</div>
+									<p class="candidate-name">{{ c.name }}</p>
+									<p class="candidate-position">{{ c.office }}</p>
+								</div>
+								{% endfor %}
+							</div>
 								<!-- <div class="col candidate">
 									<div class="candidate-photo-wrapper">
 										<img src="test.jpg" class="candidate-photo">
@@ -314,7 +337,7 @@
 									<p class="candidate-name">First Last</p>
 									<p class="candidate-position">Governor</p>
 								</div> -->
-							</div>
+
 							<!-- <div class="collapse candidate-block" id="state-candidates">
 								<div class="col candidate">
 									<div class="candidate-photo-wrapper">
