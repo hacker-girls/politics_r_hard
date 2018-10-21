@@ -112,6 +112,12 @@
         	overflow-y: auto;
         	height: 100%;
         }
+        .polling-place {
+        	display: inline-block;
+        }
+        .early-voting-site {
+        	display: inline-block;
+        }
 
         #content1 {
         	height: 50vh;
@@ -293,7 +299,28 @@
 		</div>
 		<div class="row" id="content2">
 			<div class="col-12 panel" id="get-involved">
-				<h3 class="panel-title">Get Involved</h3>
+				<h3 class="panel-title">Now Go Vote</h3>
+					{% for p in polling_places_list %}
+					<div class="polling-place">
+						<p class="type">Polling Place</p>
+						<p class="place-name">{{ p.name }}</p>
+						<p class="street-address">{{ p.address }}</p>
+						<p class="city">{{ p.city }}</p>
+						<p class="state">{{ p.state }}</p>
+						<p class="zip">{{ p.zip }}</p>
+					</div>
+					{% endfor %}
+
+					{% for s in early_voting_sites_list %}
+					<div class="early-voting-site">
+						<p class="type">Early Vote Site</p>
+						<p class="place-name">{{ s.name }}</p>
+						<p class="street-address">{{ s.address }}</p>
+						<p class="city">{{ s.city }}</p>
+						<p class="state">{{ s.state }}</p>
+						<p class="zip">{{ s.zip }}</p>
+					</div>
+					{% endfor %}
 			</div>
 		</div>
 	</div>

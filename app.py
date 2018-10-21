@@ -35,6 +35,10 @@ def form_input():
 	r = requests.get("https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyCDTh1Io4GW47gv12B5cEqOV6uA93Hx6Ew", params=params)
 	data = r.json()
 	election = data['election']['name']
+	polling_places = data['pollingLocations']
+	polling_places_list = []
+	early_vote_sites = data['earlyVoteSites']
+	early_vote_sites_list = []
 	contests = data['contests']
 	contest_type = []
 	contest_office_federal = []
@@ -105,6 +109,13 @@ def form_input():
 					else:
 						contest_candidates_local.append({'name': c['name'], 'office': contest['office'], 'imgUrl': 'https://freeiconshop.com/wp-content/uploads/edd/person-solid.png', 'partyColor': partyColor})
 
+	for place in polling_places:
+		polling_places_list.append({'name': place['locationName'], 'address': place['line1'], 'city': place['city'], 'state': place['state'], 'zip': place['zip']})
+
+	for site in early_vote_sites:
+		early_vote_sites_list.append({'name': place['locationName'], 'address': place['line1'], 'city': place['city'], 'state': place['state'], 'zip': place['zip']})
+
+
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
 			'user_tweets' : user_tweets,
@@ -115,7 +126,9 @@ def form_input():
 			'contest_office_local' : contest_office_local,
 			'contest_candidates_federal' : contest_candidates_federal,
 			'contest_candidates_state' : contest_candidates_state,
-			'contest_candidates_local' : contest_candidates_local
+			'contest_candidates_local' : contest_candidates_local,
+			'polling_places_list' : polling_places,
+			'early_vote_sites_list' : early_vote_sites_list
 		}
 
 	return flask.render_template("result.html", **templateData)
