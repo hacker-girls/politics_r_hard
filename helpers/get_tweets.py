@@ -2,8 +2,6 @@ import twitter
 from twitter import *
 import pandas as pd
 
-data = {'Sources': [], 'Tweets': []}
-
 OAUTH_TOKEN="2464717370-ztIheNqKFIr9ll1ZG3OEa1SxRPTGY8k1XL3Ukj0"
 OAUTH_SECRET="doEQPqBTLo22FrakNfY2q3jdLJyary6TFcLT8sv8AJes7"
 CONSUMER_KEY="0J1e4CLZOLJTG1fVQaQya4fH1"
@@ -13,7 +11,10 @@ twitter = Twitter (
 	auth=OAuth(OAUTH_TOKEN, OAUTH_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 ) 
 
-def get_tweets_db(name):		
+def get_tweets_db(name):	
+
+	data = {'Sources': [], 'Tweets': []}
+
 	result_accts = twitter.users.search(q = name)
 	user_found = False
 
