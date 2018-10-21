@@ -4,7 +4,6 @@ from flask import Flask, request, render_template
 from twitter import *
 import json
 import requests
-from helpers.get_verif_tweets import get_handle_tweets
 
 OAUTH_TOKEN="2464717370-ztIheNqKFIr9ll1ZG3OEa1SxRPTGY8k1XL3Ukj0"
 OAUTH_SECRET="doEQPqBTLo22FrakNfY2q3jdLJyary6TFcLT8sv8AJes7"
