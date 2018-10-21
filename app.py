@@ -35,7 +35,10 @@ def form_input():
 	r = requests.get("https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyCDTh1Io4GW47gv12B5cEqOV6uA93Hx6Ew", params=params)
 	data = r.json()
 	election = data['election']['name']
-	polling_places = data['pollingLocations']
+	if 'pollingLocations' in data:
+		polling_places = data['pollingLocations']
+	else:
+		polling_places = []
 	polling_places_list = []
 	early_vote_sites = data['earlyVoteSites']
 	early_vote_sites_list = []
