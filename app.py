@@ -56,15 +56,6 @@ def form_input():
 	for contest in contests:
 		if 'type' in contest:
 			contest_type.append(contest['type'])
-
-		if 'office' in contest:
-			contest_office.append(contest['office'])
-		if 'level' in contest:
-			contest_level.append(contest['level'])
-		if 'candidates' in contest:
-			for c in contest['candidates']:
-				contest_candidates.append(c['name'])
-
 		if 'level' in contest:
 			if 'country' in contest['level']:
 				contest_office_federal.append(contest['office'])
@@ -131,7 +122,6 @@ def form_input():
 		early_vote_sites_list.append({'name': place['address']['locationName'], 'street_address': place['address']['line1'], 'city': place['address']['city'], 'state': place['address']['state'], 'zip': place['address']['zip']})
 
 
-
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
 			'user_tweets' : user_tweets,
@@ -157,4 +147,3 @@ def main():
 if __name__ == '__main__':
 	app.debug=True
 	app.run()
-
