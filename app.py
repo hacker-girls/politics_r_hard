@@ -195,7 +195,7 @@ def form_input():
 			'pred' : pred,
 			'election': election,
 			'contest_type' : contest_type,
-			'contest_office_federal' : contest_office_federal,s
+			'contest_office_federal' : contest_office_federal,
 			'contest_office_state' : contest_office_state,
 			'contest_office_local' : contest_office_local,
 			'contest_candidates_federal' : contest_candidates_federal,
