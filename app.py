@@ -43,8 +43,6 @@ def model(user_df):
         pred = piped_vect(total_df['Tweets'],total_df['pol'],user_df['Tweets'])
         return pred
 
-<<<<<<< HEAD
-=======
 def gen_Graph(user_df):
         right_buzz = ['snowflake','MAGA','PC','illegals','pro-life','buildthewall','wall','LiberalLogic','Hoax','istandwithbrett','alllivesmatter','bluelivesmatter','antifa','red','tax cut','win','puppet','fake news']
         left_buzz = ['metoo','lovewins','notmypresident','pro-choice','LGBT','reform','familiesbelongtogether','abolishICE','blacklivesmatter','nobannowall','marchforourlives','gun control','imwithher','feelthebern']
@@ -60,45 +58,38 @@ def gen_Graph(user_df):
                         if word in tweets:
                                 leftb = leftb + 1
 
-        return rightb,leftb
 
 
-# <<<<<<< HEAD
-# =======
-
->>>>>>> 051a7c6b30b961e2b363336d14e3eeb1fbca33ef
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 
-<<<<<<< HEAD
-=======
-# >>>>>>> 1e392c7a1ca5fb13d57dea98fdfd1cbf40b56cff
->>>>>>> 051a7c6b30b961e2b363336d14e3eeb1fbca33ef
 def form_input():
 	if request.method == 'POST':
 		screen_name = request.form['screen_name']
 		location = request.form['location']
 
-	# user_tweets = twitter.statuses.user_timeline(count=1000, screen_name=screen_name)
+	user_tweets = twitter.statuses.user_timeline(count=1000, screen_name=screen_name)
 
-	data = {'Sources': [], 'Tweets': []}
-	data['Sources'].append(screen_name)
+	# data = {'Sources': [], 'Tweets': []}
+	# data['Sources'].append(screen_name)
 
-	tlist = []
+	# tlist = []
 
-	for t in twitter.statuses.user_timeline(count=1000, screen_name=screen_name, tweet_mode="extended"):
-		tlist.append(t['full_text'].encode("utf-8"))
-	data['Tweets'].append(tlist)
+	# for t in twitter.statuses.user_timeline(count=1000, screen_name=screen_name, tweet_mode="extended"):
+	# 	tlist.append(t['full_text'].encode("utf-8"))
+	# data['Tweets'].append(tlist)
 
-	df = pd.DataFrame(data, columns=['Sources', 'Tweets'])
+	# df = pd.DataFrame(data, columns=['Sources', 'Tweets'])
 
-	# app.logger.debug(itpTweets)
+	# # app.logger.debug(itpTweets)
 
-	    #DF IS THE IMPORTANT DATAFRAME
-	    #DF->MODEL
-	pred = model(df)
-	repubhit,demhit = gen_graph(df)
+	#     #DF IS THE IMPORTANT DATAFRAME
+	#     #DF->MODEL
+	# pred = model(df)
+
+	# repubhit,demhit = gen_graph(df)
+
 	address = location
 
 	params = {
@@ -198,7 +189,6 @@ def form_input():
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
 			'user_tweets' : user_tweets,
-			'pred' : pred,
 			'election': election,
 			'contest_type' : contest_type,
 			'contest_office_federal' : contest_office_federal,
