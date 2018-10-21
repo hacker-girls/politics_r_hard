@@ -58,17 +58,15 @@ def gen_Graph(user_df):
                         if word in tweets:
                                 leftb = leftb + 1
 
+
         return rightb,leftb
 
-
-# <<<<<<< HEAD
-# =======
 
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 
-# >>>>>>> 1e392c7a1ca5fb13d57dea98fdfd1cbf40b56cff
+
 def form_input():
 	if request.method == 'POST':
 		screen_name = request.form['screen_name']
@@ -92,7 +90,7 @@ def form_input():
 	    #DF IS THE IMPORTANT DATAFRAME
 	    #DF->MODEL
 	pred = model(df)
-	repubhit,demhit = gen_graph(df)
+
 	address = location
 
 	params = {
