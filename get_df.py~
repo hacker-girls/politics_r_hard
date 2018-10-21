@@ -1,0 +1,19 @@
+import pandas as pd
+
+def csv_to_df(pathname,val):
+    df = pd.read_csv(pathname).drop(['Unnamed: 0'],axis=1)
+    df = df.sample(frac=1).reset_index(drop=True) #shuffle it up
+    df['pol'] = np.full((df.shape[0],1),val)
+    return df
+
+
+leftc = csv_to_df('./data/left_cong.csv',1)
+leftc = leftc.rename(columns = {'Sources':'News'})
+left = pd.concat([csv_to_df('./data/left1.csv',1),leftc],ignore_index=True)
+rightc = csv_to_df('./data/right_cong.csv',-1)
+rightc = rightc.rename(columns = {'Sources':'News'})
+right = pd.concat([csv_to_df('./data/left1.csv',-1),rightc],ignore_index=True)
+center = csv_to_df('./data/center1.csv',0)
+total_df = pd.concat([left,center,right],ignore_index=True)
+total_df = total_df.sample(frac=1).reset_index(drop=True)
+total_df.to_csv('./data/total.csv')
