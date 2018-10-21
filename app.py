@@ -4,6 +4,7 @@ from flask import Flask, request, render_template
 from twitter import *
 import json
 import requests
+from helpers.get_verif_tweets import get_handle_tweets
 
 OAUTH_TOKEN="2464717370-ztIheNqKFIr9ll1ZG3OEa1SxRPTGY8k1XL3Ukj0"
 OAUTH_SECRET="doEQPqBTLo22FrakNfY2q3jdLJyary6TFcLT8sv8AJes7"
@@ -29,7 +30,6 @@ def form_input():
 	address = location
 
 	params = {
-		#'key': "AIzaSyCDTh1Io4GW47gv12B5cEqOV6uA93Hx6Ew",
 		'address': address,
 	}
 
@@ -42,11 +42,15 @@ def form_input():
 	contest_level = []
 	contest_candidates = []
 	for contest in contests:
-		contest_type.append(contest['type'])
-		contest_office.append(contest['office'])
-		contest_level.append(contest['level'])
-		for c in contest['candidates']:
-			contest_candidates.append(c['name'])
+		if 'type' in contest:
+			contest_type.append(contest['type'])
+		if 'office' in contest:
+			contest_office.append(contest['office'])
+		if 'level' in contest:
+			contest_level.append(contest['level'])
+		if 'candidates' in contest:
+			for c in contest['candidates']:
+				contest_candidates.append(c['name'])
 
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
