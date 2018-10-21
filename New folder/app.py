@@ -27,14 +27,14 @@ def model(user_df):
 
         total_df = pd.read_csv('./data/total.csv')
         stop_words = set(stopwords.words('english'))
-
+        
         def pre_process(mess):
                 mess = nltk.word_tokenize(mess)
                 clean = [word.lower() for word in mess if word.lower() not in stop_words]
                 return clean
 
         def piped_vect(X,y,user_x):
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)    
                 text_clf = Pipeline([('vect', CountVectorizer(analyzer=pre_process,encoding='utf-8',strip_accents=['ascii','unicode'],max_df=0.8,min_df=0.3)),('tfidf',TfidfTransformer()),('clf', MultinomialNB()),])
                 text_clf = text_clf.fit(X_train, y_train)
                 predicted = text_clf.predict(user_x)
@@ -43,38 +43,10 @@ def model(user_df):
         pred = piped_vect(total_df['Tweets'],total_df['pol'],user_df['Tweets'])
         return pred
 
-<<<<<<< HEAD
-=======
-def gen_Graph(user_df):
-        right_buzz = ['snowflake','MAGA','PC','illegals','pro-life','buildthewall','wall','LiberalLogic','Hoax','istandwithbrett','alllivesmatter','bluelivesmatter','antifa','red','tax cut','win','puppet','fake news']
-        left_buzz = ['metoo','lovewins','notmypresident','pro-choice','LGBT','reform','familiesbelongtogether','abolishICE','blacklivesmatter','nobannowall','marchforourlives','gun control','imwithher','feelthebern']
-
-        rightb = 0
-        leftb = 0
-
-        for tweets in user_df['Tweets']:
-                for word in right_buzz:
-                        if word.lower() in tweets.lower():
-                                rightb = rightb + 1
-                for word in left_buzz:
-                        if word in tweets:
-                                leftb = leftb + 1
-
-        return rightb,leftb
-
-
-# <<<<<<< HEAD
-# =======
-
->>>>>>> 051a7c6b30b961e2b363336d14e3eeb1fbca33ef
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 
-<<<<<<< HEAD
-=======
-# >>>>>>> 1e392c7a1ca5fb13d57dea98fdfd1cbf40b56cff
->>>>>>> 051a7c6b30b961e2b363336d14e3eeb1fbca33ef
 def form_input():
 	if request.method == 'POST':
 		screen_name = request.form['screen_name']
@@ -98,7 +70,7 @@ def form_input():
 	    #DF IS THE IMPORTANT DATAFRAME
 	    #DF->MODEL
 	pred = model(df)
-	repubhit,demhit = gen_graph(df)
+	    
 	address = location
 
 	params = {
@@ -208,9 +180,7 @@ def form_input():
 			'contest_candidates_state' : contest_candidates_state,
 			'contest_candidates_local' : contest_candidates_local,
 			'polling_places_list' : polling_places,
-			'early_vote_sites_list' : early_vote_sites_list,
-                'repubhit' : repubhit, #help what r the spacing
-                'demhit' : demhit
+			'early_vote_sites_list' : early_vote_sites_list
 		}
 
 	return flask.render_template("result.html", **templateData)
