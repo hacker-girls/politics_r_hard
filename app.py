@@ -4,6 +4,8 @@ from flask import Flask, request, render_template
 from twitter import *
 import json
 import requests
+from helpers.get_tweets import tweets_to_df
+from model.training import user_pred
 # import pandas as pd
 # import numpy as np
 # import nltk
@@ -69,7 +71,11 @@ def form_input():
 		screen_name = request.form['screen_name']
 		location = request.form['location']
 
-	user_tweets = twitter.statuses.user_timeline(count=1000, screen_name=screen_name)
+	# user_tweets = twitter.statuses.user_timeline(count=1000, screen_name=screen_name)
+
+	user_df = tweets_to_df(screen_name)
+
+	pred = user_pred(user_df)
 
 	# data = {'Sources': [], 'Tweets': []}
 	# data['Sources'].append(screen_name)
@@ -188,7 +194,8 @@ def form_input():
 
 	templateData = {
 			'screen_name' : '{} last 10 tweets'.format(screen_name),
-			'user_tweets' : user_tweets,
+			#'user_tweets' : user_tweets,
+			'pred' : pred,
 			'election': election,
 			'contest_type' : contest_type,
 			'contest_office_federal' : contest_office_federal,
