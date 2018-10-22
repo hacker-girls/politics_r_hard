@@ -16,7 +16,7 @@ def csv_to_df(pathname,val):
     return df
 
 
-leftc = csv_to_df(r"C:\Users\Natalie DellaMaria\Documents\cpsc\HackGT\politics_r_hard\model\data\left_cong.csv",1)
+leftc = csv_to_df(r"politics_r_hard\model\data\left_cong.csv",1)
 leftc = leftc.rename(columns = {'Sources':'News'})
 left = pd.concat([csv_to_df(r"C:\Users\Natalie DellaMaria\Documents\cpsc\HackGT\politics_r_hard\model\data\left1.csv",1),leftc],ignore_index=True)
 rightc = csv_to_df(r"C:\Users\Natalie DellaMaria\Documents\cpsc\HackGT\politics_r_hard\model\data\right_cong.csv",-1)
